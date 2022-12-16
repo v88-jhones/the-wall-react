@@ -1,0 +1,29 @@
+@import "../../../assets/scss/variables";
+
+.auth_container {
+    display: flex;
+    height: 100vh;
+
+    .form_container {
+        align-self: center;
+        flex: 3;
+    }
+
+    .illustration_container {
+        align-items: center;
+        background: $color-primary-light;
+        display: flex;
+        flex: 2;
+
+        @media only screen and (max-width: $bp-medium) {
+            display: none;       
+        }
+
+        img{
+            height: auto;
+            transform: translateX(-7rem);
+            width: 50rem;
+        }
+    }
+
+}

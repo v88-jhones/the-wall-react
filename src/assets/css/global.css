@@ -1,0 +1,75 @@
+/* Colors */
+/* Drop shadows */
+/* Resets */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+html {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  font-size: 62.5%;
+  /* 10px/62.5 -> 1rem = 10px */
+  scroll-behavior: smooth;
+}
+body {
+  background: #fbfbfb;
+  color: #152c61;
+  font-size: 1.6rem;
+  font-weight: 300;
+}
+a {
+  color: #2c6bff;
+  text-decoration: none;
+}
+input,
+textarea {
+  color: inherit;
+  font-family: inherit;
+}
+button {
+  font-family: inherit;
+}
+.hide {
+  display: none;
+}
+ul {
+  list-style-type: none;
+}
+/* Breakpoints */
+/* 1440px/16px */
+/* 1100px/16px */
+/* 700px/16px */
+/* Mixins */
+/* Components */
+.btn {
+  border-radius: 0.4rem;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  padding: 1.5rem 4.5rem;
+  transition: all 0.2s;
+}
+.btn_primary {
+  background: #2c6bff;
+  text-transform: uppercase;
+}
+.btn_primary:disabled {
+  background: rgba(44, 107, 255, 0.5);
+}
+.btn_primary:hover:not(:disabled) {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  transform: scale(1.01);
+}
+.btn_small {
+  font-weight: 500;
+  padding: 0.7rem 3rem;
+  text-transform: none;
+}
+/*# sourceMappingURL=global.css.map */

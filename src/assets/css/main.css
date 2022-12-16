@@ -1,0 +1,448 @@
+/* Colors */
+/* Drop shadows */
+/* Resets */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+html {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  font-size: 62.5%;
+  /* 10px/62.5 -> 1rem = 10px */
+  scroll-behavior: smooth;
+}
+body {
+  background: #fbfbfb;
+  color: #152c61;
+  font-size: 1.6rem;
+  font-weight: 300;
+}
+a {
+  color: #2c6bff;
+  text-decoration: none;
+}
+input,
+textarea {
+  color: inherit;
+  font-family: inherit;
+}
+button {
+  font-family: inherit;
+}
+.hide {
+  display: none;
+}
+ul {
+  list-style-type: none;
+}
+/* Breakpoints */
+/* 1440px/16px */
+/* 1100px/16px */
+/* 700px/16px */
+/* Mixins */
+/* Components */
+.btn {
+  border-radius: 0.4rem;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  padding: 1.5rem 4.5rem;
+  transition: all 0.2s;
+}
+.btn_primary {
+  background: #2c6bff;
+  text-transform: uppercase;
+}
+.btn_primary:disabled {
+  background: rgba(44, 107, 255, 0.5);
+}
+.btn_primary:hover:not(:disabled) {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  transform: scale(1.01);
+}
+.btn_small {
+  font-weight: 500;
+  padding: 0.7rem 3rem;
+  text-transform: none;
+}
+.auth_container {
+  display: flex;
+  height: 100vh;
+}
+.auth_container .form_container {
+  align-self: center;
+  flex: 3;
+}
+.auth_container .form_container form {
+  background: #fff;
+  border-radius: 0.6rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  margin: 0 auto;
+  max-width: 45rem;
+  padding: 4rem;
+}
+.auth_container .form_container form h4 {
+  color: #2c6bff;
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 4rem;
+}
+.auth_container .form_container form h1 {
+  font-size: 4rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+.auth_container .form_container form button[type="submit"] {
+  display: block;
+  margin: 4rem auto 3.5rem;
+}
+.auth_container .form_group {
+  color: #152c61;
+  display: flex;
+  flex-direction: column;
+}
+.auth_container .form_group:not(:last-of-type) {
+  margin-bottom: 2.8rem;
+}
+.auth_container .form_group label {
+  align-items: center;
+  color: #152c61;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+.auth_container .form_group label a {
+  color: #666;
+  font-weight: 300;
+  font-size: 1.4rem;
+}
+.auth_container .form_group input {
+  background: #eef4ff;
+  border-bottom: 2px solid transparent;
+  border-radius: 0.4rem;
+  border: 2px solid transparent;
+  font-size: 1.4rem;
+  font-weight: 400;
+  height: 5.5rem;
+  outline: none;
+  padding: 1.7rem 1rem;
+}
+.auth_container .form_group input.error {
+  background: #fdf2f1;
+}
+.auth_container .form_group input.error:focus {
+  border-bottom: 2px solid #e1554c;
+}
+.auth_container .form_group input:focus {
+  border-bottom: 2px solid #2c6bff;
+}
+.auth_container .form_group input::placeholder {
+  color: #acb7cf;
+}
+.auth_container .form_error {
+  color: #e1554c;
+  font-size: 1.4rem;
+  font-weight: 300;
+  margin-top: 0.5rem;
+}
+.auth_container .form_footer {
+  color: #ccc;
+  font-weight: 400;
+  text-align: center;
+}
+.auth_container .form_policy {
+  color: #152c61;
+  font-weight: 300;
+  margin-top: 3.3rem;
+  text-align: center;
+}
+.auth_container .illustration_container {
+  align-items: center;
+  background: #86a7f2;
+  display: flex;
+  flex: 2;
+}
+@media only screen and (max-width: 68.75em) {
+  .auth_container .illustration_container {
+    display: none;
+  }
+}
+.auth_container .illustration_container img {
+  height: auto;
+  transform: translateX(-7rem);
+  width: 50rem;
+}
+.auth_container #register_form button[type="submit"] {
+  display: block;
+  margin: 3.5rem auto;
+}
+.container {
+  margin: 0 auto;
+  max-width: 80em;
+}
+.nav {
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  color: #152c61;
+  padding: 3rem;
+}
+.nav .container {
+  align-items: center;
+  display: flex;
+}
+@media only screen and (max-width: 43.75em) {
+  .nav .container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+.nav_title {
+  font-size: 2.6rem;
+  font-weight: 500;
+  margin-right: auto;
+}
+@media only screen and (max-width: 43.75em) {
+  .nav_title {
+    margin-right: 0;
+  }
+}
+.nav a {
+  font-weight: 600;
+  margin-left: 2rem;
+}
+.main {
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  margin: 5rem auto;
+  min-height: 70vh;
+  padding: 7rem;
+}
+@media only screen and (max-width: 68.75em) {
+  .main {
+    padding: 5rem;
+  }
+}
+@media only screen and (max-width: 43.75em) {
+  .main {
+    padding: 3rem;
+  }
+}
+.main_header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4.5rem;
+}
+.main_header p {
+  color: #707070;
+}
+@media only screen and (max-width: 43.75em) {
+  .main_header {
+    flex-direction: column;
+    gap: 2rem;
+    text-align: center;
+  }
+}
+.message {
+  border: 1px solid #dce6ff;
+  border-radius: 0.6rem;
+  padding: 2.5rem;
+}
+@media screen and (max-width: 43.75em) {
+  .message {
+    text-align: center !important;
+  }
+}
+.message:not(:last-of-type) {
+  margin-bottom: 2rem;
+}
+.message_actions {
+  display: flex;
+  flex-wrap: wrap;
+  font-weight: 400;
+  gap: 1.2rem;
+  margin-top: 2rem;
+}
+@media screen and (max-width: 43.75em) {
+  .message_actions {
+    justify-content: center;
+  }
+}
+.message_actions button {
+  align-items: center;
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  font-size: 1.6rem;
+  gap: 0.5rem;
+}
+.message_actions button img {
+  height: 2.4rem;
+  width: 2.4rem;
+}
+@media screen and (max-width: 43.75em) {
+  .message_actions button {
+    font-size: 1.4rem;
+  }
+}
+.message_actions button.message_edit {
+  color: #2c6bff;
+}
+.message_actions button.message_edit img {
+  height: 3rem;
+  width: 3rem;
+}
+.message_actions button.message_comment.active {
+  color: #2c6bff;
+}
+.message_actions button.message_comment.active img {
+  content: url("../images/message-blue.svg");
+}
+.message_actions button.message_user span {
+  font-weight: 500;
+}
+.message_form {
+  border: 1px solid #dce6ff;
+  border-radius: 0.6rem;
+  padding: 2.5rem;
+  margin: 2rem 0;
+}
+.message_form button[type="submit"] {
+  display: block;
+  margin-left: auto;
+  margin-top: 1rem;
+}
+.update_form {
+  text-align: right;
+}
+.update_form textarea {
+  margin-bottom: 2rem;
+}
+.update_form .cancel_edit {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  font-size: 1.6rem;
+  font-weight: 400;
+  margin-right: 3rem;
+}
+textarea {
+  background: #f5f8ff;
+  border-radius: 0.6rem;
+  border: 1px solid #dce6ff;
+  color: #152c61;
+  font-size: 1.6rem;
+  height: 8.4rem;
+  outline: none;
+  padding: 1rem;
+  resize: none;
+  width: 100%;
+}
+textarea:focus {
+  border: 1px solid #2c6bff;
+}
+textarea::placeholder {
+  color: rgba(21, 44, 97, 0.5);
+}
+#message_count {
+  color: #2c6bff;
+  font-weight: 600;
+}
+#no_message {
+  margin-top: 14rem;
+  text-align: center;
+}
+#no_message p {
+  color: #707070;
+}
+.modal {
+  background: rgba(0, 0, 0, 0.5);
+  color: #152c61;
+  display: none;
+  height: 100%;
+  left: 0;
+  overflow: auto;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+}
+.modal.show {
+  display: block;
+}
+.modal_body {
+  background: #fff;
+  border-radius: 0.6rem;
+  margin: 10% auto;
+  max-width: 90rem;
+  padding: 5rem;
+  position: relative;
+  text-align: center;
+  width: 95%;
+}
+.modal h4 {
+  font-size: 2.6rem;
+  font-weight: 500;
+  margin-bottom: 3rem;
+}
+.modal_close {
+  background: #fff url('../images/cancel.svg') no-repeat center;
+  border: none;
+  cursor: pointer;
+  height: 3.5rem;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  width: 3.5rem;
+}
+.modal_cancel {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  font-size: 1.6rem;
+  font-weight: 400;
+  margin-right: 2.4rem;
+}
+#create_message_form {
+  text-align: right;
+}
+#create_message_form textarea {
+  font-size: 1.6rem;
+  height: 18.5rem;
+  margin-bottom: 3rem;
+}
+#create_message_form textarea::placeholder {
+  color: #acb7cf;
+}
+#delete_message_modal .modal_body,
+#delete_comment_modal .modal_body {
+  max-width: 54rem;
+}
+#delete_message_modal .modal_body p,
+#delete_comment_modal .modal_body p {
+  font-weight: 400;
+}
+#delete_message_modal .modal_body form,
+#delete_comment_modal .modal_body form {
+  align-items: center;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 3rem;
+}
+#delete_message_modal .modal_body form > *,
+#delete_comment_modal .modal_body form > * {
+  flex: 1;
+}
+/*# sourceMappingURL=main.css.map */
