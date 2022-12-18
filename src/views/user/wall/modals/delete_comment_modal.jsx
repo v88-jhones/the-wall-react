@@ -1,27 +1,29 @@
 import styles from "./modal.module.scss";
 
-function DeleteConfirmModal({ 
-        isOpen = false, 
-        onClose = () => {}, 
-        onSubmit = () => {}
-    }){
+function DeleteCommentModal(props){
 
-    
+    const {onClose, onSubmit} = props;
+
     const stopPropagation = (event) => {
         event.stopPropagation();
     }
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        onSubmit();
+    }
+
     return (
         <div 
-            className={`${styles.modal} ${isOpen ? styles.show : ""}`} 
+            className={styles.modal} 
             id={styles.delete_message_modal} 
             onClick={onClose}
         >
             <div className={styles.modal_body} onClick={stopPropagation}>
-                <h4>Confirm Delete Message</h4>
-                <p>Are you sure you want to remove this message?</p>
+                <h4>Confirm Delete Comment</h4>
+                <p>Are you sure you want to remove this comment?</p>
                 <p>This action cannot be undone.</p>
-                <form action="#" id={styles.delete_message_form} onSubmit={onSubmit}>
+                <form action="#" id={styles.delete_message_form} onSubmit={handleSubmit}>
                     <input type="hidden" name="message_id" value="" />
                     <button 
                         type="button" 
@@ -48,4 +50,4 @@ function DeleteConfirmModal({
 
 }
 
-export default DeleteConfirmModal;
+export default DeleteCommentModal;

@@ -1,35 +1,26 @@
 import { useState } from "react";
 import MessageItem from "./message_item";
 import NoMessage from "../components/no_message";
-import DeleteConfirmModal from "../modals/delete_confirm_modal";
+import DeleteMessageModal from "../modals/delete_message_modal";
 
-function MessageList({ messages, onDelete = () => {}, onUpdate = () => {}, onCommentAdd = () => {} }) {
+function MessageList(props) {
 
-    const [showModal, setShowModal] = useState(false);
-    const [targetId, setTargetId] = useState(null);
-
-    const toggleModal = () => {
-        setShowModal(prevState => !prevState);
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        onDelete(targetId);
-        setTargetId(null);
-        toggleModal();
-    }
+    const {messages, onUpdate, onDelete} = props;
+    const [showDeleteMsgModal, setShowDeleteMsgModal] = useState(false);
+    const [deleteMsgId, setDeleteMsgId] = useState(0);
 
     const handleDeleteClick = (id) => {
-        toggleModal();
-        setTargetId(id);
+        setDeleteMsgId(id);
+        setShowDeleteMsgModal(true);
     }
 
-    const handleEditSubmit = (updatedMessage) => {
-        onUpdate(updatedMessage);
+    const handleDeleteMsgClose = () => {
+        setShowDeleteMsgModal(false);
     }
 
-    const handleAddCommentSubmit = (newComment) => {
-        onCommentAdd(newComment);
+    const handleDeleteMessageSubmit = () => {
+        onDelete(deleteMsgId);
+        setShowDeleteMsgModal(false);
     }
 
     if(messages.length < 1){
@@ -45,17 +36,19 @@ function MessageList({ messages, onDelete = () => {}, onUpdate = () => {}, onCom
                             key={message.id} 
                             message={message} 
                             onDeleteClick={handleDeleteClick} 
-                            onEditSubmit={handleEditSubmit}
-                            onAddCommentSubmit={handleAddCommentSubmit}
+                            onEditSubmit={onUpdate}
                         />
                     ))
                 }
             </ul>
-            <DeleteConfirmModal 
-                isOpen={showModal} 
-                onClose={toggleModal}
-                onSubmit={handleSubmit}
-            />
+                
+            {
+                showDeleteMsgModal &&
+                    <DeleteMessageModal  
+                        onClose={handleDeleteMsgClose}
+                        onSubmit={handleDeleteMessageSubmit}
+                    />
+            }
         </>
     )
 }

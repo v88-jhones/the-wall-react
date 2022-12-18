@@ -1,62 +1,46 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import CreateMessageModal from "./modals/create_message_modal";
 import MessageList from "./lists/message_list";
 import styles from "./wall.module.scss";
 
 function WallPage(){
 
-    const [showModal, setShowModal] = useState(false)
-    const [messages, setMessages] = useState([
-        {
-            id: "1",
-            content: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Incidunt eveniet iste adipisci, nostrum dolorum tempora non nobis a debitis aliquid voluptatum earum, laboriosam hic ipsam.",
-            comments: [
-                {
-                    id: "1",
-                    content: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Incidunt eveniet iste adipisci, nostrum dolorum tempora non nobis a debitis aliquid voluptatum earum, laboriosam hic ipsam."
-                }
-            ]
-        }
-    ]);
+    const [messages, setMessages] = useState([]);
+    const [showCreateMsgModal, setShowCreateMsgModal] = useState(false);
 
-    const toggleModal = () => {
-        setShowModal(prevState => !prevState);
-    }
-
-    const handleSubmit = (newContent) => {
-        setMessages(prevState => (
+    const handleCreateMsgSubmit = (newContent) => {
+        setMessages(prevMessages => (
             [
-                ...prevState,
+                ...prevMessages,
                 {
                     id: generateId(), 
-                    content: newContent,
-                    comments: []
+                    content: newContent
                 }
             ]
-        ))
-        toggleModal();
+        ));
+        setShowCreateMsgModal(false);
     }
 
-    const handleDelete = (id) => {
-        setMessages(prevState => prevState.filter(item => item.id !== id))
+    const handleCreateMsgClose = () => {
+        setShowCreateMsgModal(false);
     }
 
-    const handleUpdate = (updatedMessage) => {
-        setMessages(prevState => prevState.map(item => {
-            if(item.id == updatedMessage.id){
-                return {...item, content: updatedMessage.content}
+    const handleCreateMsgClick = () => {
+        setShowCreateMsgModal(true);
+    }
+
+    const handleUpdateMsg = (updatedMessage) => {
+        setMessages(prevMessages => prevMessages.map(item => {
+            if(item.id === updatedMessage.id){
+                return {...item, content: updatedMessage.content};
             }
-            return item
+            return item;
         }))
     }
 
-    const handleAddComment = (newComment) => {
-        setMessages(prevState => prevState.map(message => {
-            if(newComment.message_id == message.id){
-                return {...message, comments: [...message.comments, {id: generateId(), content: newComment.content}]}
-            }
-            return message;
-        }))
+    const handleDeleteMsg = (message_id) => {
+        setMessages(prevMessages => prevMessages.filter(item => item.id !== message_id));
     }
 
     function generateId(){
@@ -69,7 +53,7 @@ function WallPage(){
                 <div className={styles.container}>
                     <h4 className={styles.nav_title}>The Wall Assignment</h4>
                     <p>Welcome, Jhones Digno!</p>
-                    <a href="/views/">Logout</a>
+                    <Link to="/">Logout</Link>
                 </div>
             </nav>
 
@@ -80,25 +64,26 @@ function WallPage(){
                         <button 
                             type="button" 
                             className={styles.btn_secondary} 
-                            onClick={toggleModal}
+                            onClick={handleCreateMsgClick}
                         >
                             Create Message
                         </button>
                     </div>
                     <MessageList 
                         messages={messages}
-                        onDelete={handleDelete}
-                        onUpdate={handleUpdate}
-                        onCommentAdd={handleAddComment}
+                        onUpdate={handleUpdateMsg}
+                        onDelete={handleDeleteMsg}
                     />                    
                 </div>
             </div>
 
-            <CreateMessageModal 
-                isOpen={showModal} 
-                onClose={toggleModal}
-                onSubmit={handleSubmit}
-            />
+            {
+                showCreateMsgModal &&
+                    <CreateMessageModal 
+                        onClose={handleCreateMsgClose}
+                        onSubmit={handleCreateMsgSubmit}
+                    />
+            }
         </>
     );
 }

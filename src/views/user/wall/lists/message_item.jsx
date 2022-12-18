@@ -1,5 +1,6 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 
+import UpdateForm from "../components/update_form";
 import MessageIcon from "../../../../assets/images/message.svg";
 import BlueMessageIcon from "../../../../assets/images/message-blue.svg";
 import PencilIcon from "../../../../assets/images/pencil-write.svg";
@@ -8,131 +9,119 @@ import UserIcon from "../../../../assets/images/user.svg";
 import CommentList from "./comment_list";
 import styles from "./message.module.scss";
 
-function MessageItem({message, onDeleteClick, onEditSubmit, onAddCommentSubmit}) {
-    const {id, content, comments} = message;
+function MessageItem(props) {
+    
+    const {message, onDeleteClick, onEditSubmit} = props;
+    const {id, content} = message;
 
+    const [comments, setComments] = useState([]);
     const [showComment, setShowComment] = useState(false);
     const [showEditForm, setShowEditForm] = useState(false);
 
-    const toggleComment = () => {
+    const handleEditSubmit = (newContent) => {
+        onEditSubmit({id, content: newContent});
+        setShowEditForm(false);
+    }
+
+    const handleCreateComment = (newContent) => {
+        setComments(prevComments => [{id: generateId(), content: newContent}, ...prevComments]);
+    }
+
+    const handleUpdateComment = (id, newContent) => {
+        setComments(prevComments => prevComments.map(comment => {
+            if(comment.id === id){
+                return { ...comment, content: newContent }
+            }
+            return comment;
+        }))
+    }
+
+    const handleDeleteComment = (comment_id) => {
+        setComments(prevComments => prevComments.filter(comment => comment.id !== comment_id));
+    }
+
+    const handleEditClick = () => {
+        setShowEditForm(true);
+    }
+
+    const handleCommentClick = () => {
         setShowComment(prevState => !prevState);
     }
 
-    const toggleShowEditForm = () => {
-        setShowEditForm(prevState => !prevState);
+    const handleDeleteClick = () => {
+        onDeleteClick(id);
     }
 
-    const handleEditSubmit = (event) => {
-        event.preventDefault();
-        onEditSubmit({id, content: event.target.elements.content.value});
-        toggleShowEditForm();
+    const handleCancelUpdateClick = () => {
+        setShowEditForm(false);
     }
 
-    const handleAddComment = (event) => {
-        event.preventDefault();
-        onAddCommentSubmit({message_id: id, content: event.target.elements.content.value});
-        event.target.reset();
-        event.target.closest("form").querySelector("button[type='submit']").setAttribute("disabled", true);
-    }
-
-    const contentChange = (event) => {
-        let textarea = event.target;
-        let submit_btn = textarea.closest("form").querySelector("button[type='submit']");
-        if(textarea.value === ""){
-            submit_btn.setAttribute("disabled", true);
-        }
-        else{
-            submit_btn.removeAttribute("disabled");
-        }
+    function generateId(){
+        return Math.ceil(Date.now() + Math.random());
     }
 
     return (
-        <li className={styles.message}>
-            { 
-                showEditForm
-                ? (
-                    <form action="#" className={styles.update_form} onSubmit={handleEditSubmit}>
-                        <textarea 
-                            name="content" 
-                            tabIndex="1" 
-                            defaultValue={content}
-                            autoFocus
-                            onChange={contentChange}
-                        ></textarea>
-                        <button 
-                            type="button" 
-                            className={styles.cancel_edit} 
-                            tabIndex="3"
-                            onClick={toggleShowEditForm}    
-                        >
-                            Cancel
-                        </button>
-                        <button 
-                            type="submit" 
-                            className={styles.btn_secondary} 
-                            tabIndex="2"
-                        >
-                            Update Message
-                        </button>
-                    </form>
-                ) 
-                : (
-                    <div className={styles.message_content}>
-                        <p>{content}</p>
-                        <div className={styles.message_actions}>
-                            <button 
-                                type="button" 
-                                className={`${styles.message_comment} ${(showComment ? styles.active : null)}`} 
-                                onClick={toggleComment}
-                            >
-                                <img src={showComment ?  BlueMessageIcon : MessageIcon } alt="Message icon" />
-                                <span>{comments.length}</span> Comment
-                            </button>
-                            <button 
-                                type="button" 
-                                className={styles.message_edit}
-                                onClick={toggleShowEditForm}    
-                            >
-                                <img src={PencilIcon} alt="Pencil icon" />
-                                Edit
-                            </button>
-                            <button 
-                                type="button" 
-                                className={styles.message_delete}
-                                onClick={() => onDeleteClick(id)}
-                            >
-                                <img src={DeleteIcon} alt="Delete icon" />
-                                Delete
-                            </button>
-                            <button type="button" className={styles.message_user}>
-                                <img src={UserIcon} alt="User icon" />
-                                <span>You</span> - Few seconds ago                                
-                            </button>
-                        </div>
-                    </div>
-                )
-            }
+        <>
+            <li className={styles.message}>
+                { 
+                    showEditForm
+                        ? (
+                            <UpdateForm 
+                                content={content}
+                                onSubmit={handleEditSubmit}
+                                onCancel={handleCancelUpdateClick}
+                                btnText="Update Messaage"
+                            />
+                        ) 
+                        : (
+                            <div className={styles.message_content}>
+                                <p>{content}</p>
+                                <div className={styles.message_actions}>
+                                    <button 
+                                        type="button" 
+                                        className={`${styles.message_comment} ${(showComment ? styles.active : null)}`} 
+                                        onClick={handleCommentClick}
+                                    >
+                                        <img src={showComment ?  BlueMessageIcon : MessageIcon } alt="Message icon" />
+                                        <span>{comments.length}</span> Comment
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        className={styles.message_edit}
+                                        onClick={handleEditClick}    
+                                    >
+                                        <img src={PencilIcon} alt="Pencil icon" />
+                                        Edit
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        className={styles.message_delete}
+                                        onClick={handleDeleteClick}
+                                    >
+                                        <img src={DeleteIcon} alt="Delete icon" />
+                                        Delete
+                                    </button>
+                                    <button type="button" className={styles.message_user}>
+                                        <img src={UserIcon} alt="User icon" />
+                                        <span>You</span> - Few seconds ago                                
+                                    </button>
+                                </div>
+                            </div>
+                        )
+                }
+                
+                {
+                    showComment && 
+                        <CommentList 
+                            comments={comments}
+                            onCreate={handleCreateComment}
+                            onUpdate={handleUpdateComment}
+                            onDelete={handleDeleteComment}
+                        /> 
+                }
+            </li>
+        </>
 
-            <div className={`${styles.message_comments} ${showComment ? "" : styles.hide}`}>
-                <form action="#" className={styles.message_form} onSubmit={handleAddComment}>
-                    <textarea 
-                        name="content" 
-                        placeholder="Type your comment here." 
-                        tabIndex="1"
-                        onChange={contentChange}
-                    ></textarea>
-                    <button 
-                        type="submit" 
-                        className={styles.btn_secondary} 
-                        tabIndex="2" 
-                        disabled
-                    >
-                        Post Comment
-                    </button>
-                </form>
-                <CommentList comments={comments} />
-            </div>
-        </li>
     )
 }
 

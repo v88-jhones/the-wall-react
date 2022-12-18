@@ -1,13 +1,10 @@
 @import "../../../../assets/scss/variables";
 @import "../../../../assets/scss/global";
-.modal {
-    &.show {
-        display: block;
-    }
 
+.modal {
     background: rgba($color-black, .5);
     color: $color-primary-dark;
-    display: none;
+    display: block;
     height: 100%;
     left: 0;
     overflow: auto;
