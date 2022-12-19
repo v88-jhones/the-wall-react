@@ -1,10 +1,10 @@
 import { useState } from "react";
 import CommentItem from "./comment_item";
-import styles from "./message.module.scss";
 import DeleteCommentModal from "../modals/delete_comment_modal";
+import { Button } from "../../../global/components/button";
+import styles from "./message.module.scss";
 
 function CommentList(props){
-
     const {comments, onCreate, onUpdate, onDelete} = props;
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [deleteCommentId, setDeleteCommentId] = useState(0);
@@ -56,15 +56,16 @@ function CommentList(props){
                         placeholder="Type your comment here." 
                         tabIndex="1"
                         onChange={validateInput}
+                        autoFocus
                     ></textarea>
-                    <button 
+                    <Button 
                         type="submit" 
-                        className={styles.btn_secondary} 
                         tabIndex="2" 
                         disabled={createCommentBtnDisabled}
+                        small
                     >
                         Post Comment
-                    </button>
+                    </Button>
                 </form>
 
                 <ul>
@@ -89,7 +90,6 @@ function CommentList(props){
                     />
             }
         </>        
-
     );
 }
 

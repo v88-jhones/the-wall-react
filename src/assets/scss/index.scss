@@ -1,5 +1,4 @@
 @import "./_variables.scss";
-@import "./global.scss";
 
 /* Resets */
 
@@ -40,10 +39,36 @@ button {
     font-family: inherit;
 }
 
-.hide {
-    display: none;
-}
-
 ul {
     list-style-type: none;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: $bp-large;
+}
+
+textarea {
+    background: $color-primary-lightest;
+    border-radius: .6rem;
+    border: 1px solid $color-primary-border;
+    color: $color-primary-dark;
+    font-size: 1.6rem;
+    height: 8.4rem;
+    outline: none;
+    padding: 1rem;
+    resize: none;
+    width: 100%;
+
+    &:focus {
+        border: 1px solid $color-primary;
+    }
+
+    &::placeholder {
+        color: rgba($color-primary-dark, .5);
+    }
+}
+
+.hide {
+    display: none;
 }

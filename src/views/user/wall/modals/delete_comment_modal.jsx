@@ -1,4 +1,5 @@
 import styles from "./modal.module.scss";
+import { Button, LinkButton } from "../../../global/components/button";
 
 function DeleteCommentModal(props){
 
@@ -25,19 +26,8 @@ function DeleteCommentModal(props){
                 <p>This action cannot be undone.</p>
                 <form action="#" id={styles.delete_message_form} onSubmit={handleSubmit}>
                     <input type="hidden" name="message_id" value="" />
-                    <button 
-                        type="button" 
-                        className={styles.modal_cancel}
-                        onClick={onClose}
-                    >
-                        Cancel
-                    </button>
-                    <button 
-                        type="submit" 
-                        className={styles.btn_secondary} 
-                    >
-                        Yes, Remove It.
-                    </button>
+                    <LinkButton onClick={onClose}>Cancel</LinkButton>
+                    <Button type="submit" small>Yes, Remove It.</Button>
                 </form>
                 <button 
                     type="button" 

@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from "react";
+import {useState} from "react";
+import {Button, LinkButton} from "../../../global/components/button";
 import styles from "./modal.module.scss";
 
 function CreateMessageModal(props){
@@ -6,12 +7,6 @@ function CreateMessageModal(props){
     const {onClose, onSubmit} = props;
     const [content, setContent] = useState("");
     const [isDisabled, setIsDisabled] = useState(true);
-
-    const textareaRef = useRef(null); 
-
-    useEffect(() => {
-        textareaRef.current.focus();
-    }, []);
 
     const contentChange = (event) => {
         setContent(event.target.value);
@@ -51,30 +46,27 @@ function CreateMessageModal(props){
                         tabIndex="1"
                         onChange={contentChange}
                         value={content}
-                        ref={textareaRef}
+                        autoFocus
                     ></textarea>
-                    <button 
-                        type="button" 
-                        className={styles.modal_cancel} 
+                    <LinkButton 
                         tabIndex="3" 
                         onClick={handleClose}
                     >
                         Cancel
-                    </button>
-                    <button 
+                    </LinkButton>
+                    <Button 
                         type="submit" 
-                        className={styles.btn_secondary} 
                         tabIndex="2" 
                         disabled={isDisabled}
+                        small
                     >
                         Post Message
-                    </button>
+                    </Button>
                 </form>
                 <button type="button" className={styles.modal_close} onClick={handleClose}></button>
             </div>
         </div>
     );
-
 }
 
 export default CreateMessageModal;

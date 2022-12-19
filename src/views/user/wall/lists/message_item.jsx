@@ -1,16 +1,10 @@
 import { useState } from "react";
-
-import UpdateForm from "../components/update_form";
-import MessageIcon from "../../../../assets/images/message.svg";
-import BlueMessageIcon from "../../../../assets/images/message-blue.svg";
-import PencilIcon from "../../../../assets/images/pencil-write.svg";
-import DeleteIcon from "../../../../assets/images/delete.svg";
-import UserIcon from "../../../../assets/images/user.svg";
+import UpdateForm from "../forms/update_form";
+import {CommentButton, EditButton, DeleteButton, UserButton} from "./action_buttons/action_buttons"; 
 import CommentList from "./comment_list";
 import styles from "./message.module.scss";
 
 function MessageItem(props) {
-    
     const {message, onDeleteClick, onEditSubmit} = props;
     const {id, content} = message;
 
@@ -77,34 +71,14 @@ function MessageItem(props) {
                             <div className={styles.message_content}>
                                 <p>{content}</p>
                                 <div className={styles.message_actions}>
-                                    <button 
-                                        type="button" 
-                                        className={`${styles.message_comment} ${(showComment ? styles.active : null)}`} 
-                                        onClick={handleCommentClick}
-                                    >
-                                        <img src={showComment ?  BlueMessageIcon : MessageIcon } alt="Message icon" />
-                                        <span>{comments.length}</span> Comment
-                                    </button>
-                                    <button 
-                                        type="button" 
-                                        className={styles.message_edit}
-                                        onClick={handleEditClick}    
-                                    >
-                                        <img src={PencilIcon} alt="Pencil icon" />
-                                        Edit
-                                    </button>
-                                    <button 
-                                        type="button" 
-                                        className={styles.message_delete}
-                                        onClick={handleDeleteClick}
-                                    >
-                                        <img src={DeleteIcon} alt="Delete icon" />
-                                        Delete
-                                    </button>
-                                    <button type="button" className={styles.message_user}>
-                                        <img src={UserIcon} alt="User icon" />
-                                        <span>You</span> - Few seconds ago                                
-                                    </button>
+                                    <CommentButton 
+                                        onClick={handleCommentClick} 
+                                        count={comments.length}
+                                        active={showComment}
+                                    />
+                                    <EditButton onClick={handleEditClick} />
+                                    <DeleteButton onClick={handleDeleteClick} />
+                                    <UserButton userName="You" />
                                 </div>
                             </div>
                         )

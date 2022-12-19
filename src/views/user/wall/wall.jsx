@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import CreateMessageModal from "./modals/create_message_modal";
 import MessageList from "./lists/message_list";
+import { Button } from "../../global/components/button";
+import Nav from "./nav/nav";
 import styles from "./wall.module.scss";
 
 function WallPage(){
@@ -49,25 +50,12 @@ function WallPage(){
 
     return (
         <>
-            <nav className={styles.nav}>
-                <div className={styles.container}>
-                    <h4 className={styles.nav_title}>The Wall Assignment</h4>
-                    <p>Welcome, Jhones Digno!</p>
-                    <Link to="/">Logout</Link>
-                </div>
-            </nav>
-
-            <div className={styles.container}>
+            <Nav title="The Wall Assignment" userName="Jhones Digno" />
+            <div className="container">
                 <div className={styles.main}>
                     <div className={styles.main_header}>
                         <p><span id={styles.message_count}>{messages.length}</span> messages arranged by latest posted</p>
-                        <button 
-                            type="button" 
-                            className={styles.btn_secondary} 
-                            onClick={handleCreateMsgClick}
-                        >
-                            Create Message
-                        </button>
+                        <Button onClick={handleCreateMsgClick} small>Create Message</Button> 
                     </div>
                     <MessageList 
                         messages={messages}

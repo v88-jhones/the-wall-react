@@ -1,8 +1,10 @@
+import { useState } from "react";
+import {Button, LinkButton} from "../../../global/components/button";
 import styles from "./update_form.module.scss";
 
 function UpdateForm(props) {
-
     const {content, onSubmit, onCancel, btnText = "Update"} = props;
+    const [disabledBtn, setDisabledBtn] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -12,12 +14,11 @@ function UpdateForm(props) {
 
     const validateInput = (event) => {
         let textarea = event.target;
-        let submit_btn = textarea.closest("form").querySelector("button[type='submit']");
-        if(textarea.value === ""){
-            submit_btn.setAttribute("disabled", true);
+        if(textarea.value.trim() === ""){
+            setDisabledBtn(true);
         }
         else{
-            submit_btn.removeAttribute("disabled");
+            setDisabledBtn(false);
         }
     }
     
@@ -34,21 +35,8 @@ function UpdateForm(props) {
                 autoFocus
                 onChange={validateInput}
             ></textarea>
-            <button 
-                type="button" 
-                className={styles.cancel_edit} 
-                tabIndex="3"
-                onClick={onCancel}    
-            >
-                Cancel
-            </button>
-            <button 
-                type="submit" 
-                className={styles.btn_secondary} 
-                tabIndex="2"
-            >
-                {btnText}
-            </button>
+            <LinkButton tabIndex="3" onClick={onCancel}>Cancel</LinkButton>
+            <Button type="submit" tabIndex="2" disabled={disabledBtn} small>{btnText}</Button>
         </form>
     )
 }

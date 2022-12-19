@@ -1,24 +1,24 @@
 import { useState } from "react";
-import LoginForm from "./components/login_form"
-import RegisterForm from "./components/register_form";
+import LoginForm from "./forms/login_form"
+import RegisterForm from "./forms/register_form";
 import IllustrationImage from "../../../assets/images/main.svg";
 import styles from "./auth.module.scss";
 
 function Auth(){
 
-    const [show_login_form, set_show_login_form] = useState(true);
+    const [showLoginForm, setShowLoginForm] = useState(true);
 
-    const toggle_form = () => {
-        set_show_login_form(prevState => !prevState);
+    const toggleForm = () => {
+        setShowLoginForm(prevState => !prevState);
     }
 
     return (
         <div className={styles.auth_container}>
             <div className={styles.form_container}>
                 {
-                    show_login_form
-                        ? <LoginForm onSwitchClick={toggle_form} />
-                        : <RegisterForm onSwitchClick={toggle_form} />
+                    showLoginForm
+                        ? <LoginForm onSwitchClick={toggleForm} />
+                        : <RegisterForm onSwitchClick={toggleForm} />
                 }
             </div>
             <div className={styles.illustration_container}>

@@ -1,0 +1,18 @@
+@import "../../../../assets/scss/variables";
+@import "../../../../assets/scss/mixins";
+
+
+.update_form {
+    text-align: right;
+
+    textarea {
+        margin-bottom: 2rem;
+    }
+
+    button {
+        display: inline;
+        &:not(:last-of-type) {
+            margin-right: 3rem;
+        }
+    }
+}

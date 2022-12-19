@@ -1,5 +1,4 @@
 @import "../../../../assets/scss/variables";
-@import "../../../../assets/scss/global";
 
 .modal {
     background: rgba($color-black, .5);
@@ -40,16 +39,6 @@
         top: 1rem;
         width: 3.5rem;
     }
-
-    &_cancel {
-        background: none;
-        border: none;
-        color: $color-grey-2;
-        cursor: pointer;
-        font-size: 1.6rem;
-        font-weight: 400;
-        margin-right: 2.4rem;
-    }
 }
 
 #create_message_form {
@@ -62,6 +51,13 @@
 
         &::placeholder {
             color: $color-primary-darker;
+        }
+    }
+
+    button {
+        display: inline;
+        &:not(:last-of-type){
+            margin-right: 2.4rem;
         }
     }
 }
@@ -79,11 +75,11 @@
             align-items: center;
             display: flex;
             gap: 2rem;
-            justify-content: center;
             margin-top: 3rem;
-
-            > * {
+            button {
                 flex: 1;
+                display: flex;
+                justify-content: center;
             }
         }
     }
