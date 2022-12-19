@@ -17,8 +17,8 @@ function Auth(){
             <div className={styles.form_container}>
                 {
                     showLoginForm
-                        ? <LoginForm onSwitchClick={toggleForm} />
-                        : <RegisterForm onSwitchClick={toggleForm} />
+                        ? <LoginForm onSignUpClick={toggleForm} />
+                        : <RegisterForm onSignInClick={toggleForm} />
                 }
             </div>
             <div className={styles.illustration_container}>

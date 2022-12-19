@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "../../../global/components/button";
 import styles from "./form.module.scss";
 
-function LoginForm({ onSwitchClick }){
+function LoginForm({ onSignUpClick }){
     const [formData, setFormData] = useState({email: "", password: ""});
     const [errors, setErrors] = useState({email: "", password: ""});
 
@@ -101,7 +101,7 @@ function LoginForm({ onSwitchClick }){
                 <button 
                     type="button" 
                     className={styles.form_link} 
-                    onClick={onSwitchClick} 
+                    onClick={onSignUpClick} 
                     tabIndex="4"
                 >
                     Sign Up

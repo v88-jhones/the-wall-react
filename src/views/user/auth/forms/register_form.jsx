@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "../../../global/components/button";
 import styles from "./form.module.scss";
 
-function RegisterForm({ onSwitchClick }){
+function RegisterForm({ onSignInClick }){
 
     const [formData, setFormData] = useState({email: "", password: "", confirm_password: ""});
     const [errors, setErrors] = useState({email: "", password: ""});
@@ -123,7 +123,7 @@ function RegisterForm({ onSwitchClick }){
             <p className={styles.form_policy}>
                 By creating an account, you agree with The Wall's 
                 <Link to="/"> Privacy Policy</Link> and 
-                <Link onClick={onSwitchClick} to="/"> Terms of Use</Link>.
+                <Link to="/"> Terms of Use</Link>.
             </p>
             <Button tabIndex="4" type="submit">
                     Sign Up
@@ -133,7 +133,7 @@ function RegisterForm({ onSwitchClick }){
                 <button 
                     type="button" 
                     className={styles.form_link} 
-                    onClick={onSwitchClick} 
+                    onClick={onSignInClick} 
                     tabIndex="5"
                 >
                     Sign In

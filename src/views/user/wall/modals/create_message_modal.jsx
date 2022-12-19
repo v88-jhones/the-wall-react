@@ -1,5 +1,5 @@
-import {useState} from "react";
-import {Button, LinkButton} from "../../../global/components/button";
+import { useState } from "react";
+import { Button, LinkButton } from "../../../global/components/button";
 import styles from "./modal.module.scss";
 
 function CreateMessageModal(props){

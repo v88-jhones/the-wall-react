@@ -30,13 +30,11 @@ a {
 }
 
 input,
-textarea {
+textarea,
+button {
     color: inherit;
     font-family: inherit;
-}
-
-button {
-    font-family: inherit;
+    font-size: inherit;
 }
 
 ul {

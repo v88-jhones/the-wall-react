@@ -6,11 +6,10 @@ function Nav (props){
         title="Title",
         userName="User"
     } = props;
-
     return (
         <nav className={styles.nav}>
             <div className={"container"}>
-                <h4 className={styles.nav_title}>{title}</h4>
+                <h4>{title}</h4>
                 <p>Welcome, {userName}!</p>
                 <Link to="/">Logout</Link>
             </div>

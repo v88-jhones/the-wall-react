@@ -4,30 +4,24 @@ button {
     align-items: center;
     background: none;
     border: none;
-    color: $color-grey-2;
     cursor: pointer;
     display: flex;
-    font-size: 1.6rem;
+    font-weight: 400;
 
     img {
-        height: 2.4rem;
-        width: 2.4rem;
         margin-right: .5rem;
-        &.bigIcon {
-            height: 3rem;
-            width: 3rem;
-        }
-    }
-
-    @media screen and (max-width: $bp-small) {
-        font-size: 1.4rem;
     }
 
     &.active {
-        color: $color-primary;
+        p {
+            color: $color-primary;
+        }
     }
 
-    span {
-        font-weight: 500;
+    p {
+        color: $color-grey-2;
+        span {
+            font-weight: 500;
+        }
     }
 }

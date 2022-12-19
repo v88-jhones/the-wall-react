@@ -34,8 +34,8 @@ function MessageList(props) {
                         <MessageItem 
                             key={message.id} 
                             message={message} 
-                            onDeleteClick={handleDeleteClick} 
-                            onEditSubmit={onUpdate}
+                            onDelete={handleDeleteClick} 
+                            onUpdate={onUpdate}
                         />
                     ))
                 }

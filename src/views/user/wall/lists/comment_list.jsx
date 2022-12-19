@@ -28,10 +28,6 @@ function CommentList(props){
         setCreateCommentBtnDisabled(true);
     }
 
-    const handleEditSubmit = (id, newContent) => {
-        onUpdate(id, newContent);
-    }
-
     const handleDeleteClick = (id) => {
         setDeleteCommentId(id);
         setShowDeleteModal(true);
@@ -74,8 +70,8 @@ function CommentList(props){
                             <CommentItem 
                                 key={comment.id} 
                                 comment={comment} 
-                                onEditSubmit={handleEditSubmit}
-                                onDeleteClick={handleDeleteClick}
+                                onDelete={handleDeleteClick}
+                                onUpdate={onUpdate}
                             />
                         ))
                     }

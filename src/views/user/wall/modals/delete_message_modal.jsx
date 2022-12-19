@@ -25,8 +25,8 @@ function DeleteMessageModal(props){
                 <p>Are you sure you want to remove this message?</p>
                 <p>This action cannot be undone.</p>
                 <form action="#" id={styles.delete_message_form} onSubmit={handleSubmit}>
-                    <LinkButton onClick={onClose}>Cancel</LinkButton>
-                    <Button type="submit" small>Yes, Remove It.</Button>
+                    <LinkButton tabIndex="2" onClick={onClose}>Cancel</LinkButton>
+                    <Button tabIndex="1" type="submit" small>Yes, Remove It.</Button>
                 </form>
                 <button 
                     type="button" 

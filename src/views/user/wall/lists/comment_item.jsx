@@ -1,10 +1,10 @@
 import { useState } from "react";
 import UpdateForm from "../forms/update_form";
-import {EditButton, DeleteButton, UserButton} from "./action_buttons/action_buttons";
+import { EditButton, DeleteButton, UserButton } from "./action_buttons/action_buttons";
 import styles from "./message.module.scss";
 
 function CommentItem(props) {
-    const {comment, onEditSubmit, onDeleteClick} = props;
+    const {comment, onDelete, onUpdate} = props;
     const {id, content} = comment;
 
     const [showEditForm, setShowEditForm] = useState(false);
@@ -18,12 +18,13 @@ function CommentItem(props) {
     }
 
     const handleEditSubmit = (newContent) => {
-        onEditSubmit(id, newContent);
+        let updatedComment = {id, content: newContent};
+        onUpdate(updatedComment);
         setShowEditForm(false);
     }
 
     const handleDeleteClick = () => {
-        onDeleteClick(id);
+        onDelete(id);
     }
 
     return (

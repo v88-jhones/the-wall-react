@@ -1,8 +1,9 @@
 @import "../../../../assets/scss/variables";
-@import "../../../../assets/scss/mixins";
 
 .message {
-    @include outline_container;
+    border: 1px solid $color-primary-border;
+    border-radius: .6rem;
+    padding: 2.5rem;
 
     @media screen and (max-width: $bp-small) {
         text-align: center !important;
@@ -25,7 +26,9 @@
     }
 
     &_form {
-        @include outline_container;
+        border: 1px solid $color-primary-border;
+        border-radius: .6rem;
+        padding: 2.5rem;
         margin: 2rem 0;
 
         button[type="submit"]{

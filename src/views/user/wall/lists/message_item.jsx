@@ -1,11 +1,11 @@
 import { useState } from "react";
 import UpdateForm from "../forms/update_form";
-import {CommentButton, EditButton, DeleteButton, UserButton} from "./action_buttons/action_buttons"; 
+import { CommentButton, EditButton, DeleteButton, UserButton } from "./action_buttons/action_buttons"; 
 import CommentList from "./comment_list";
 import styles from "./message.module.scss";
 
 function MessageItem(props) {
-    const {message, onDeleteClick, onEditSubmit} = props;
+    const {message, onDelete, onUpdate} = props;
     const {id, content} = message;
 
     const [comments, setComments] = useState([]);
@@ -13,7 +13,7 @@ function MessageItem(props) {
     const [showEditForm, setShowEditForm] = useState(false);
 
     const handleEditSubmit = (newContent) => {
-        onEditSubmit({id, content: newContent});
+        onUpdate({id, content: newContent});
         setShowEditForm(false);
     }
 
@@ -21,10 +21,10 @@ function MessageItem(props) {
         setComments(prevComments => [{id: generateId(), content: newContent}, ...prevComments]);
     }
 
-    const handleUpdateComment = (id, newContent) => {
+    const handleUpdateComment = (updatedComment) => {
         setComments(prevComments => prevComments.map(comment => {
-            if(comment.id === id){
-                return { ...comment, content: newContent }
+            if(comment.id === updatedComment.id){
+                return { ...comment, content: updatedComment.content }
             }
             return comment;
         }))
@@ -43,7 +43,7 @@ function MessageItem(props) {
     }
 
     const handleDeleteClick = () => {
-        onDeleteClick(id);
+        onDelete(id);
     }
 
     const handleCancelUpdateClick = () => {
