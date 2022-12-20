@@ -1,101 +1,83 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import UpdateForm from "../forms/update_form";
+import ModalContext from "../../../../context/modal/modal_context";
+import WallContext from "../../../../context/wall/wall_context";
 import { CommentButton, EditButton, DeleteButton, UserButton } from "./action_buttons/action_buttons"; 
+import CreateCommentForm from "../forms/create_comment_form";
 import CommentList from "./comment_list";
 import styles from "./message.module.scss";
 
-function MessageItem(props) {
-    const {message, onDelete, onUpdate} = props;
-    const {id, content} = message;
+function MessageItem({message}) {
+    const {id, content, comments} = message;
 
-    const [comments, setComments] = useState([]);
+    const { openDeleteMessageModal } = useContext(ModalContext);
+    const { updateMessage, addComment } = useContext(WallContext);
+
     const [showComment, setShowComment] = useState(false);
     const [showEditForm, setShowEditForm] = useState(false);
 
+    const handleDeleteClick = () => {
+        openDeleteMessageModal(id);
+    }
+
     const handleEditSubmit = (newContent) => {
-        onUpdate({id, content: newContent});
+        updateMessage(id, newContent);
         setShowEditForm(false);
-    }
-
-    const handleCreateComment = (newContent) => {
-        setComments(prevComments => [{id: generateId(), content: newContent}, ...prevComments]);
-    }
-
-    const handleUpdateComment = (updatedComment) => {
-        setComments(prevComments => prevComments.map(comment => {
-            if(comment.id === updatedComment.id){
-                return { ...comment, content: updatedComment.content }
-            }
-            return comment;
-        }))
-    }
-
-    const handleDeleteComment = (comment_id) => {
-        setComments(prevComments => prevComments.filter(comment => comment.id !== comment_id));
     }
 
     const handleEditClick = () => {
         setShowEditForm(true);
     }
 
-    const handleCommentClick = () => {
-        setShowComment(prevState => !prevState);
+    const handleCreateCommentSubmit = (newContent) => {
+        addComment(id, newContent);
     }
 
-    const handleDeleteClick = () => {
-        onDelete(id);
+    const handleCommentClick = () => {
+        setShowComment(prevState => !prevState);
     }
 
     const handleCancelUpdateClick = () => {
         setShowEditForm(false);
     }
 
-    function generateId(){
-        return Math.ceil(Date.now() + Math.random());
-    }
-
     return (
-        <>
-            <li className={styles.message}>
-                { 
-                    showEditForm
-                        ? (
-                            <UpdateForm 
-                                content={content}
-                                onSubmit={handleEditSubmit}
-                                onCancel={handleCancelUpdateClick}
-                                btnText="Update Messaage"
-                            />
-                        ) 
-                        : (
-                            <div className={styles.message_content}>
-                                <p>{content}</p>
-                                <div className={styles.message_actions}>
-                                    <CommentButton 
-                                        onClick={handleCommentClick} 
-                                        count={comments.length}
-                                        active={showComment}
-                                    />
-                                    <EditButton onClick={handleEditClick} />
-                                    <DeleteButton onClick={handleDeleteClick} />
-                                    <UserButton userName="You" />
-                                </div>
+        <li className={styles.message}>
+            { 
+                showEditForm
+                    ? (
+                        <UpdateForm 
+                            content={content}
+                            onSubmit={handleEditSubmit}
+                            onCancel={handleCancelUpdateClick}
+                            btnText="Update Messaage"
+                        />
+                    ) 
+                    : (
+                        <div className={styles.message_content}>
+                            <p>{content}</p>
+                            <div className={styles.message_actions}>
+                                <CommentButton 
+                                    onClick={handleCommentClick} 
+                                    count={comments.length}
+                                    active={showComment}
+                                />
+                                <EditButton onClick={handleEditClick} />
+                                <DeleteButton onClick={handleDeleteClick} />
+                                <UserButton userName="You" />
                             </div>
-                        )
-                }
-                
-                {
-                    showComment && 
-                        <CommentList 
-                            comments={comments}
-                            onCreate={handleCreateComment}
-                            onUpdate={handleUpdateComment}
-                            onDelete={handleDeleteComment}
-                        /> 
-                }
-            </li>
-        </>
-
+                        </div>
+                    )
+            }
+            
+            {
+                showComment && 
+                    <>
+                        <CreateCommentForm onSubmit={handleCreateCommentSubmit} />
+                        <CommentList comments={comments}/> 
+                    </>
+            }
+        </li>
     )
 }
 

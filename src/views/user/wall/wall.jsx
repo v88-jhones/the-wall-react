@@ -1,4 +1,8 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import WallContext from "../../../context/wall/wall_context";
+import ModalContext from "../../../context/modal/modal_context"
+import DeleteCommentModal from "./modals/delete_comment_modal";
+import DeleteMessageModal from "./modals/delete_message_modal";
 import CreateMessageModal from "./modals/create_message_modal";
 import MessageList from "./lists/message_list";
 import { Button } from "../../global/components/button";
@@ -7,20 +11,28 @@ import styles from "./wall.module.scss";
 
 function WallPage(){
 
-    const [messages, setMessages] = useState([]);
     const [showCreateMsgModal, setShowCreateMsgModal] = useState(false);
+    const { 
+        messages, 
+        addMessage, 
+        deleteMessage,
+        deleteComment,
+    } = useContext(WallContext);
+    const { delete_message, delete_comment, closeDeleteModal } = useContext(ModalContext);
 
     const handleCreateMsgSubmit = (newContent) => {
-        setMessages(prevMessages => (
-            [
-                ...prevMessages,
-                {
-                    id: generateId(), 
-                    content: newContent
-                }
-            ]
-        ));
+        addMessage(newContent);
         setShowCreateMsgModal(false);
+    }
+
+    const handleDeleteMsg = () => {
+        deleteMessage(delete_message.id);
+        closeDeleteModal();
+    }
+
+    const handleDeleteCmnt = () => {
+        deleteComment(delete_comment.message_id, delete_comment.id);
+        closeDeleteModal();
     }
 
     const handleCreateMsgClose = () => {
@@ -29,23 +41,6 @@ function WallPage(){
 
     const handleCreateMsgClick = () => {
         setShowCreateMsgModal(true);
-    }
-
-    const handleUpdateMsg = (updatedMessage) => {
-        setMessages(prevMessages => prevMessages.map(item => {
-            if(item.id === updatedMessage.id){
-                return {...item, content: updatedMessage.content};
-            }
-            return item;
-        }))
-    }
-
-    const handleDeleteMsg = (message_id) => {
-        setMessages(prevMessages => prevMessages.filter(item => item.id !== message_id));
-    }
-
-    function generateId(){
-        return Math.ceil(Date.now() + Math.random());
     }
 
     return (
@@ -57,11 +52,7 @@ function WallPage(){
                         <p><span id={styles.message_count}>{messages.length}</span> messages arranged by latest posted</p>
                         <Button onClick={handleCreateMsgClick} small>Create Message</Button> 
                     </div>
-                    <MessageList 
-                        messages={messages}
-                        onUpdate={handleUpdateMsg}
-                        onDelete={handleDeleteMsg}
-                    />                    
+                    <MessageList messages={messages} />                    
                 </div>
             </div>
 
@@ -70,6 +61,22 @@ function WallPage(){
                     <CreateMessageModal 
                         onClose={handleCreateMsgClose}
                         onSubmit={handleCreateMsgSubmit}
+                    />
+            }
+
+            {
+                delete_message.modal && 
+                    <DeleteMessageModal 
+                        onClose={closeDeleteModal}
+                        onSubmit={handleDeleteMsg}
+                    />
+            }
+
+            {
+                delete_comment.modal && 
+                    <DeleteCommentModal 
+                        onClose={closeDeleteModal}
+                        onSubmit={handleDeleteCmnt}
                     />
             }
         </>

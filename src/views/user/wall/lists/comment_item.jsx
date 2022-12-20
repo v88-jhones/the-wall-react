@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import UpdateForm from "../forms/update_form";
+import WallContext from "../../../../context/wall/wall_context";
+import ModalContext from "../../../../context/modal/modal_context";
 import { EditButton, DeleteButton, UserButton } from "./action_buttons/action_buttons";
 import styles from "./message.module.scss";
 
-function CommentItem(props) {
-    const {comment, onDelete, onUpdate} = props;
-    const {id, content} = comment;
+function CommentItem({comment}) {
+    const {id, content, message_id} = comment;
 
+    const { updateComment } = useContext(WallContext);
+    const { openDeleteCommentModal } = useContext(ModalContext);
+    
     const [showEditForm, setShowEditForm] = useState(false);
 
     const handleEditClick = () => {
@@ -18,13 +22,12 @@ function CommentItem(props) {
     }
 
     const handleEditSubmit = (newContent) => {
-        let updatedComment = {id, content: newContent};
-        onUpdate(updatedComment);
+        updateComment(message_id, id, newContent);
         setShowEditForm(false);
     }
 
     const handleDeleteClick = () => {
-        onDelete(id);
+        openDeleteCommentModal(message_id, id);
     }
 
     return (
