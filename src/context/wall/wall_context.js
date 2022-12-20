@@ -6,8 +6,7 @@ const WallContext = createContext();
 export const WallProvider = ({children}) => {
 
     const initialState = {
-        messages: [],
-        comments: []
+        messages: []
     };
 
     const [state, dispatch] = useReducer(WallReducer, initialState);
@@ -46,11 +45,17 @@ export const WallProvider = ({children}) => {
     }
 
     const deleteComment = (message_id, comment_id) => {
-        dispatch({type: "DELETE_COMMENT", payload: {message_id, comment_id}});
+        dispatch({
+                type: "DELETE_COMMENT", 
+                payload: {message_id, comment_id}
+            });
     }
 
     const updateComment = (message_id, comment_id, content) => {
-        dispatch({type: "UPDATE_COMMENT", payload: {message_id, comment_id, content}});
+        dispatch({
+                type: "UPDATE_COMMENT", 
+                payload: {message_id, comment_id, content}
+            });
     }
 
     /* HELPERS */
