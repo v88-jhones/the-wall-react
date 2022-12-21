@@ -1,27 +1,26 @@
-import { useState, useContext } from "react";
-import UpdateForm from "../forms/update_form";
-import ModalContext from "../../../../context/modal/modal_context";
-import WallContext from "../../../../context/wall/wall_context";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { openDeleteMessageModal } from "../../../../redux/modal/modal_slice";
+import { updateMessage, addComment } from "../../../../redux/wall/wall_slice";
+import UpdateForm from "../forms/update_form/update_form";
 import { CommentButton, EditButton, DeleteButton, UserButton } from "./action_buttons/action_buttons"; 
-import CreateCommentForm from "../forms/create_comment_form";
+import CreateCommentForm from "../forms/create_comment_form/create_comment_form";
 import CommentList from "./comment_list";
 import styles from "./message.module.scss";
 
 function MessageItem({message}) {
     const {id, content, comments} = message;
 
-    const { openDeleteMessageModal } = useContext(ModalContext);
-    const { updateMessage, addComment } = useContext(WallContext);
-
     const [showComment, setShowComment] = useState(false);
     const [showEditForm, setShowEditForm] = useState(false);
+    const dispatch = useDispatch();
 
     const handleDeleteClick = () => {
-        openDeleteMessageModal(id);
+        dispatch(openDeleteMessageModal(id));
     }
 
     const handleEditSubmit = (newContent) => {
-        updateMessage(id, newContent);
+        dispatch(updateMessage({id, content: newContent}));
         setShowEditForm(false);
     }
 
@@ -30,7 +29,7 @@ function MessageItem({message}) {
     }
 
     const handleCreateCommentSubmit = (newContent) => {
-        addComment(id, newContent);
+        dispatch(addComment({message_id: id, content: newContent}));
     }
 
     const handleCommentClick = () => {

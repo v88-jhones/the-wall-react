@@ -1,6 +1,7 @@
-import { useState, useContext } from "react";
-import WallContext from "../../../context/wall/wall_context";
-import ModalContext from "../../../context/modal/modal_context"
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { closeDeleteModal } from "../../../redux/modal/modal_slice";
+import { addMessage, deleteMessage, deleteComment } from "../../../redux/wall/wall_slice";
 import DeleteCommentModal from "./modals/delete_comment_modal";
 import DeleteMessageModal from "./modals/delete_message_modal";
 import CreateMessageModal from "./modals/create_message_modal";
@@ -12,27 +13,26 @@ import styles from "./wall.module.scss";
 function WallPage(){
 
     const [showCreateMsgModal, setShowCreateMsgModal] = useState(false);
-    const { 
-        messages, 
-        addMessage, 
-        deleteMessage,
-        deleteComment,
-    } = useContext(WallContext);
-    const { delete_message, delete_comment, closeDeleteModal } = useContext(ModalContext);
+    const { messages } = useSelector(state => state.wall);
+    const { delete_message, delete_comment } = useSelector(state => state.modal);
+    const dispatch = useDispatch();
 
     const handleCreateMsgSubmit = (newContent) => {
-        addMessage(newContent);
+        dispatch(addMessage(newContent));
         setShowCreateMsgModal(false);
     }
 
     const handleDeleteMsg = () => {
-        deleteMessage(delete_message.id);
-        closeDeleteModal();
+        dispatch(deleteMessage(delete_message.id));
+        dispatch(closeDeleteModal());
     }
 
     const handleDeleteCmnt = () => {
-        deleteComment(delete_comment.message_id, delete_comment.id);
-        closeDeleteModal();
+        dispatch(deleteComment({
+            message_id: delete_comment.message_id, 
+            comment_id: delete_comment.id 
+        }));
+        dispatch(closeDeleteModal());
     }
 
     const handleCreateMsgClose = () => {
@@ -41,6 +41,10 @@ function WallPage(){
 
     const handleCreateMsgClick = () => {
         setShowCreateMsgModal(true);
+    }
+
+    const handleCloseDeleteModal = () => {
+        dispatch(closeDeleteModal());
     }
 
     return (
@@ -67,7 +71,7 @@ function WallPage(){
             {
                 delete_message.modal && 
                     <DeleteMessageModal 
-                        onClose={closeDeleteModal}
+                        onClose={handleCloseDeleteModal}
                         onSubmit={handleDeleteMsg}
                     />
             }
@@ -75,7 +79,7 @@ function WallPage(){
             {
                 delete_comment.modal && 
                     <DeleteCommentModal 
-                        onClose={closeDeleteModal}
+                        onClose={handleCloseDeleteModal}
                         onSubmit={handleDeleteCmnt}
                     />
             }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {Button, LinkButton} from "../../../global/components/button";
+import {Button, LinkButton} from "../../../../global/components/button";
 import styles from "./update_form.module.scss";
 
 function UpdateForm(props) {

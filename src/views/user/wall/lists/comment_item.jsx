@@ -1,16 +1,15 @@
-import { useState, useContext } from "react";
-import UpdateForm from "../forms/update_form";
-import WallContext from "../../../../context/wall/wall_context";
-import ModalContext from "../../../../context/modal/modal_context";
+import { useState } from "react";
+import UpdateForm from "../forms/update_form/update_form";
+import { useDispatch } from "react-redux";
+import { openDeleteCommentModal } from "../../../../redux/modal/modal_slice";
+import { updateComment } from "../../../../redux/wall/wall_slice";
 import { EditButton, DeleteButton, UserButton } from "./action_buttons/action_buttons";
 import styles from "./message.module.scss";
 
 function CommentItem({comment}) {
     const {id, content, message_id} = comment;
 
-    const { updateComment } = useContext(WallContext);
-    const { openDeleteCommentModal } = useContext(ModalContext);
-    
+    const dispatch = useDispatch();
     const [showEditForm, setShowEditForm] = useState(false);
 
     const handleEditClick = () => {
@@ -22,12 +21,16 @@ function CommentItem({comment}) {
     }
 
     const handleEditSubmit = (newContent) => {
-        updateComment(message_id, id, newContent);
+        dispatch(updateComment({
+            message_id: message_id, 
+            comment_id: id, 
+            content: newContent
+        }));
         setShowEditForm(false);
     }
 
     const handleDeleteClick = () => {
-        openDeleteCommentModal(message_id, id);
+        dispatch(openDeleteCommentModal({message_id, comment_id: id}));
     }
 
     return (

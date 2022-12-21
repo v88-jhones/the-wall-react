@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "../../../global/components/button"
+import { Button } from "../../../../global/components/button"
 import styles from "./create_comment_form.module.scss";
 
 function CreateCommentForm({onSubmit}) {
