@@ -1,42 +1,27 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Button } from "../../../../global/components/button"
 import styles from "./create_comment_form.module.scss";
 
 function CreateCommentForm({onSubmit}) {
+    const { register, handleSubmit, watch, reset } = useForm();
 
-    const [disabledBtn, setDisabledBtn] = useState(true);
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        let newContent = event.target.elements.content.value;
-        onSubmit(newContent);
-        setDisabledBtn(true);
-        event.target.reset();
-    }
-
-    const validateInput = (event) => {
-        let textarea = event.target;
-        if(textarea.value.trim() === ""){
-            setDisabledBtn(true);
-        }
-        else{
-            setDisabledBtn(false);
-        }
+    const handleSubmitCmnt = (formData) => {
+        onSubmit(formData.content);
+        reset();
     }
 
     return (
-        <form action="#" className={styles.create_comment_form} onSubmit={handleSubmit}>
+        <form action="#" className={styles.create_comment_form} onSubmit={handleSubmit(handleSubmitCmnt)}>
             <textarea 
-                name="content" 
+                {...register("content")}
                 placeholder="Type your comment here." 
                 tabIndex="1"
-                onChange={validateInput}
                 autoFocus
             ></textarea>
             <Button 
                 type="submit" 
                 tabIndex="2" 
-                disabled={disabledBtn}
+                disabled={!watch("content")}
                 small
             >
                 Post Comment

@@ -1,34 +1,17 @@
-import { useState } from "react";
 import { Button, LinkButton } from "../../../global/components/button";
+import { useForm } from "react-hook-form";
 import styles from "./modal.module.scss";
 
 function CreateMessageModal(props){
-
+    const { register, handleSubmit, watch } = useForm();
     const {onClose, onSubmit} = props;
-    const [content, setContent] = useState("");
-    const [isDisabled, setIsDisabled] = useState(true);
 
-    const contentChange = (event) => {
-        setContent(event.target.value);
-        if(event.target.value === ""){
-            setIsDisabled(true);
-        }
-        else{
-            setIsDisabled(false);
-        }
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        onSubmit(content);
-        setContent("");
-        setIsDisabled(true);
+    const handleSubmitMsg = (formData) => {
+        onSubmit(formData.content);
     }
 
     const handleClose = (event) => {
         onClose(event);
-        setContent("");
-        setIsDisabled(true);
     }
 
     const stopPropagation = (event) => {
@@ -39,13 +22,11 @@ function CreateMessageModal(props){
         <div className={styles.modal} onClick={handleClose}>
             <div className={styles.modal_body} onClick={stopPropagation}>
                 <h4>Create a Message</h4>
-                <form action="#" id={styles.create_message_form} onSubmit={handleSubmit}>
+                <form action="#" id={styles.create_message_form} onSubmit={handleSubmit(handleSubmitMsg)}>
                     <textarea 
-                        name="content" 
                         placeholder="Type your message here" 
                         tabIndex="1"
-                        onChange={contentChange}
-                        value={content}
+                        {...register("content")}
                         autoFocus
                     ></textarea>
                     <LinkButton 
@@ -57,7 +38,7 @@ function CreateMessageModal(props){
                     <Button 
                         type="submit" 
                         tabIndex="2" 
-                        disabled={isDisabled}
+                        disabled={!watch("content")}
                         small
                     >
                         Post Message

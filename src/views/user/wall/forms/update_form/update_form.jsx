@@ -1,42 +1,33 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import {Button, LinkButton} from "../../../../global/components/button";
 import styles from "./update_form.module.scss";
 
 function UpdateForm(props) {
     const {content, onSubmit, onCancel, btnText = "Update"} = props;
-    const [disabledBtn, setDisabledBtn] = useState(false);
+    const { register, handleSubmit, watch, reset } = useForm({
+        defaultValues: {
+            content
+        }
+    });
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        let newContent = event.target.elements.content.value;
-        onSubmit(newContent);
+    const handleSubmitContent = (formData) => {
+        onSubmit(formData.content);
+        reset();
     }
 
-    const validateInput = (event) => {
-        let textarea = event.target;
-        if(textarea.value.trim() === ""){
-            setDisabledBtn(true);
-        }
-        else{
-            setDisabledBtn(false);
-        }
-    }
-    
     return (
         <form 
             action="#" 
             className={styles.update_form} 
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(handleSubmitContent)}
         >
             <textarea 
-                name="content" 
+                {...register("content")}
                 tabIndex="1" 
-                defaultValue={content}
                 autoFocus
-                onChange={validateInput}
             ></textarea>
             <LinkButton tabIndex="3" onClick={onCancel}>Cancel</LinkButton>
-            <Button type="submit" tabIndex="2" disabled={disabledBtn} small>{btnText}</Button>
+            <Button type="submit" tabIndex="2" disabled={!watch("content")} small>{btnText}</Button>
         </form>
     )
 }
