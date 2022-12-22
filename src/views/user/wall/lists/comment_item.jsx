@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import UpdateForm from "../forms/update_form";
+import UpdateForm from "../forms/update_form/update_form";
 import WallContext from "../../../../context/wall/wall_context";
 import ModalContext from "../../../../context/modal/modal_context";
 import { EditButton, DeleteButton, UserButton } from "./action_buttons/action_buttons";

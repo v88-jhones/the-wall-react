@@ -1,9 +1,9 @@
 import { useState, useContext } from "react";
-import UpdateForm from "../forms/update_form";
+import UpdateForm from "../forms/update_form/update_form";
 import ModalContext from "../../../../context/modal/modal_context";
 import WallContext from "../../../../context/wall/wall_context";
 import { CommentButton, EditButton, DeleteButton, UserButton } from "./action_buttons/action_buttons"; 
-import CreateCommentForm from "../forms/create_comment_form";
+import CreateCommentForm from "../forms/create_comment_form/create_comment_form";
 import CommentList from "./comment_list";
 import styles from "./message.module.scss";
 
